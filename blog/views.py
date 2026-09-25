@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 from blog.models import Post
 from blog.serializers import PostSerializer, UserSerializer
@@ -19,7 +20,9 @@ def author_detail(request, pk):
     author = UserSerializer(author)
     return JsonResponse(author.data, safe=False)
 
+
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def user_detail(request, pk):
     user = User.objects.get(id=pk)
     user = UserSerializer(user)
