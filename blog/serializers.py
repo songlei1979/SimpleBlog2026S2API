@@ -5,13 +5,14 @@ from blog.models import Post
 
 
 class PostSerializer(serializers.ModelSerializer):
-    author_username = serializers.CharField(source='author.username')
-    category_name = serializers.CharField(source='category.name')
+    author_username = serializers.ReadOnlyField(source='author.username')
+    category_name = serializers.ReadOnlyField(source='category.name')
 
     class Meta:
         model = Post
         fields = ['title', 'header_image', 'body',
                   'author', 'category', 'author_username', 'category_name']
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
